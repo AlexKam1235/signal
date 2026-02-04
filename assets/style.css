@@ -16,7 +16,11 @@ body {
 .terminal {
   max-width: 800px;
   margin: auto;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 20px;
+  border: 1px solid #1aff1a22;
 }
+
 
 h1 {
   font-size: 14px;
@@ -52,4 +56,5 @@ pre {
   border-top: 1px solid #333;
   padding-top: 20px;
 }
+
 
