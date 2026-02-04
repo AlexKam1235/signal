@@ -3,7 +3,7 @@ body {
   background-image: url("logo.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 600px;
+  background-size: 900px;
   background-attachment: fixed;
 
   color: #e5e5e5;
@@ -16,7 +16,8 @@ body {
 .terminal {
   max-width: 800px;
   margin: auto;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(1px);
   padding: 20px;
   border: 1px solid #1aff1a22;
 }
@@ -56,5 +57,6 @@ pre {
   border-top: 1px solid #333;
   padding-top: 20px;
 }
+
 
 
