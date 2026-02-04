@@ -1,10 +1,17 @@
 body {
-  background: #0b0b0b;
+  background-color: #0b0b0b;
+  background-image: url("logo.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 600px;
+  background-attachment: fixed;
+
   color: #e5e5e5;
   font-family: monospace;
   margin: 0;
   padding: 20px;
 }
+
 
 .terminal {
   max-width: 800px;
@@ -45,3 +52,4 @@ pre {
   border-top: 1px solid #333;
   padding-top: 20px;
 }
+
