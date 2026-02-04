@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SIGNAL // OBSERVER</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<main class="terminal">
+
+  <section>
+    <h1>SIGNAL STATUS</h1>
+    <pre id="signal-status">loading...</pre>
+  </section>
+
+  <section>
+    <h1>PHASE</h1>
+    <pre id="phase-status">loading...</pre>
+  </section>
+
+  <section>
+    <h1>OBSERVERS</h1>
+    <pre id="observer-count">loading...</pre>
+    <pre id="observer-log">loading...</pre>
+  </section>
+
+  <section>
+    <h1>REWARD POOL</h1>
+    <pre id="reward-pool">loading...</pre>
+  </section>
+
+  <section class="action">
+    <a href="donate.html">[ ACKNOWLEDGE SIGNAL ]</a>
+  </section>
+
+  <section class="proof">
+    <h1>FINAL PHASE — INTEGRITY PROOF</h1>
+    <pre id="proof-status">loading...</pre>
+    <pre id="proof-hash">loading...</pre>
+    <pre id="proof-note"></pre>
+  </section>
+
+</main>
+
+<script>
+async function loadJSON(path) {
+  const res = await fetch(path);
+  return res.json();
+}
+
+async function init() {
+  const phase = await loadJSON('phase.json');
+  const observers = await loadJSON('observers.json');
+  const reward = await loadJSON('reward.json');
+  const proof = await loadJSON('proof.json');
+
+  document.getElementById('signal-status').textContent =
+    "STABLE";
+
+  document.getElementById('phase-status').textContent =
+    phase.phase_2_status.toUpperCase();
+
+  document.getElementById('observer-count').textContent =
+    "ONLINE: " + observers.observers.length;
+
+  document.getElementById('observer-log').textContent =
+    observers.observers
+      .map(o => `[${o.name}] acknowledged`)
+      .join('\n');
+
+  document.getElementById('reward-pool').textContent =
+    reward.reward_pool + " USDT";
+
+  document.getElementById('proof-status').textContent =
+    "STATUS: " + proof.final_phase.toUpperCase();
+
+  document.getElementById('proof-hash').textContent =
+    "SHA-256:\n" + proof.final_hash;
+
+  document.getElementById('proof-note').textContent =
+    "This hash was published before the final phase.";
+}
+
+init();
+</script>
+
+</body>
+</html>
