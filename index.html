@@ -48,19 +48,23 @@
 </main>
 
 <script>
-async function load(path) {
-  return fetch(path).then(r => r.json());
+async function loadJSON(path, fallback) {
+  try {
+    const r = await fetch(path);
+    if (!r.ok) throw new Error(path);
+    return await r.json();
+  } catch {
+    return fallback;
+  }
 }
 
 async function init() {
-  const observers = await load('observers.json');
-  const reward = await load('reward.json');
-  const phase = await load('phase.json');
-  const proof = await load('proof.json');
+  const observers = await loadJSON('observers.json', { observers: [] });
+  const reward = await loadJSON('reward.json', { reward_pool: 0 });
+  const phase = await loadJSON('phase.json', { phase: "pending" });
+  const proof = await loadJSON('proof.json', { final_hash: "—" });
 
-  document.getElementById('phase').textContent =
-    phase.phase.toUpperCase();
-
+  document.getElementById('phase').textContent = phase.phase.toUpperCase();
   document.body.classList.add("phase-" + phase.phase);
 
   document.getElementById('reward').textContent =
@@ -75,23 +79,18 @@ async function init() {
   observers.observers.forEach((o, i) => {
     const li = document.createElement('li');
     li.textContent = `[${o.name}] acknowledged`;
-    li.classList.add('observer');
-    if (i === observers.observers.length - 1) {
-      li.classList.add('new');
-    }
+    li.className = "observer" + (i === observers.observers.length - 1 ? " new" : "");
     list.appendChild(li);
   });
 
-  document.getElementById('hash').textContent =
-    proof.final_hash;
+  document.getElementById('hash').textContent = proof.final_hash;
 
-  const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(location.search);
   if (params.get("ack") === "1") {
     document.body.classList.add("signal-acknowledged");
-
     setTimeout(() => {
       document.body.classList.remove("signal-acknowledged");
-      history.replaceState({}, document.title, window.location.pathname);
+      history.replaceState({}, "", location.pathname);
     }, 6000);
   }
 }
