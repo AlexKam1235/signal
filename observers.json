@@ -1,6 +1,6 @@
 {
   "observers": [
-    { "name": "Nyx", "amount": 50 },
-    { "name": "voidrunner", "amount": 100 }
+    { "name": "Nyx" },
+    { "name": "Voidrunner" }
   ]
 }
