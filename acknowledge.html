@@ -8,8 +8,9 @@
   <style>
     :root {
       --signal: #39ff14;
-      --signal-dim: rgba(57,255,20,0.35);
       --bg: #000;
+      --white-soft: rgba(255,255,255,0.85);
+      --white-dim: rgba(255,255,255,0.55);
     }
 
     * {
@@ -24,22 +25,91 @@
       font-family: "Courier New", monospace;
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: flex-start;
+      padding: 60px 20px;
     }
 
-    .channel {
-      width: 520px;
-      padding: 32px;
-      border: 1px solid var(--signal-dim);
-      background: rgba(0,0,0,0.65);
-      box-shadow: 0 0 60px rgba(0,0,0,0.9);
-      position: relative;
+    .panel {
+      width: 100%;
+      max-width: 640px;
+      border: 1px solid rgba(57,255,20,0.25);
+      padding: 32px 28px 40px;
+      box-shadow: 0 0 40px rgba(57,255,20,0.05);
     }
 
-    .channel::before {
+    h1 {
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .text {
+      font-size: 13px;
+      line-height: 1.7;
+      opacity: 0.9;
+      margin-bottom: 22px;
+    }
+
+    .section {
+      margin-top: 28px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      opacity: 0.8;
+    }
+
+    .payment {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px dashed rgba(255,255,255,0.2);
+      color: var(--white-soft);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .address {
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 12px;
+      word-break: break-all;
+      color: #fff;
+    }
+
+    .footer {
+      margin-top: 36px;
+      text-align: center;
+      font-size: 11px;
+      opacity: 0.5;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 26px;
+      padding: 12px 20px;
+      border: 1px solid var(--signal);
+      color: var(--signal);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1px;
+      transition: all 0.25s ease;
+    }
+
+    .btn:hover {
+      background: var(--signal);
+      color: #000;
+      box-shadow: 0 0 22px rgba(57,255,20,0.6);
+    }
+
+    body::after {
       content: "";
-      position: absolute;
+      position: fixed;
       inset: 0;
       background: repeating-linear-gradient(
         to bottom,
@@ -50,151 +120,121 @@
       );
       pointer-events: none;
     }
-
-    h1 {
-      font-size: 14px;
-      letter-spacing: 2px;
-      margin-bottom: 18px;
-    }
-
-    h2 {
-      font-size: 13px;
-      margin-top: 26px;
-      margin-bottom: 10px;
-      opacity: 0.9;
-    }
-
-    .text {
-      font-size: 13px;
-      line-height: 1.65;
-      opacity: 0.9;
-      margin-bottom: 20px;
-    }
-
-    .notice {
-      font-size: 12px;
-      line-height: 1.6;
-      opacity: 0.75;
-      margin-bottom: 20px;
-    }
-
-    .protocol li {
-      font-size: 12px;
-      margin-bottom: 6px;
-    }
-
-    .address {
-      font-size: 12px;
-      padding: 10px;
-      border: 1px dashed var(--signal-dim);
-      word-break: break-all;
-      margin-bottom: 20px;
-    }
-
-    .rules {
-      font-size: 12px;
-      line-height: 1.6;
-      opacity: 0.8;
-    }
-
-    .rules li {
-      margin-bottom: 6px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 24px;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid var(--signal);
-      text-align: center;
-      cursor: pointer;
-      font-size: 12px;
-      text-decoration: none;
-      color: var(--signal);
-      transition: all 0.2s ease;
-    }
-
-    .btn:hover {
-      background: var(--signal);
-      color: #000;
-      box-shadow: 0 0 18px rgba(57,255,20,0.6);
-    }
-
-    .footer {
-      margin-top: 18px;
-      font-size: 11px;
-      opacity: 0.5;
-      text-align: center;
-    }
   </style>
 </head>
 
 <body>
 
-<div class="channel">
-  <h1>[ ACKNOWLEDGEMENT CHANNEL OPEN ]</h1>
+  <div class="panel">
+    <h1>[ ACKNOWLEDGEMENT CHANNEL ]</h1>
 
-  <div class="text">
-    This channel does not initiate the game.<br>
-    It records intentional interaction with the signal.
+    <div class="text">
+      Hello.
+    </div>
+
+    <div class="text">
+      You have reached the page of an independent online puzzle game.
+      This is not advertising, a lottery, or an investment project.
+    </div>
+
+    <div class="section">
+      <div class="section-title">ABOUT THE PROJECT</div>
+      <div class="text">
+        This site is the entry point to a multi-phase intellectual quest.
+      </div>
+      <div class="text">
+        The game will begin unexpectedly and without a separate announcement.
+      </div>
+      <div class="text">
+        Participation is open to everyone.
+        No registration is required.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">PRIZE STRUCTURE</div>
+      <div class="text">
+        The quest includes a prize.
+      </div>
+      <div class="text">
+        The prize is formed from voluntary contributions
+        and represents a shared pool.
+      </div>
+      <div class="text">
+        The first player to fully complete the quest
+        receives the entire pool.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">PARTICIPATION & CONTRIBUTIONS</div>
+      <div class="text">
+        Participation in the quest does not require sending funds.
+      </div>
+      <div class="text">
+        A contribution is a voluntary decision.
+        It does not provide advantages, hints, or priority.
+      </div>
+      <div class="text">
+        All participants are in equal conditions,
+        regardless of contribution.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">OBSERVERS</div>
+      <div class="text">
+        Optionally, a participant may be listed as an Observer.
+      </div>
+      <div class="text">
+        Observers are participants who chose to contribute
+        to the shared pool and leave a name or alias.
+      </div>
+      <div class="text">
+        Being listed as an Observer does not affect gameplay
+        and does not provide advantages.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">HOW TO BECOME AN OBSERVER</div>
+      <div class="text">
+        To be listed as an Observer:
+      </div>
+      <div class="text">
+        1. Send USDT to the address below<br>
+        2. Use the TRC20 network<br>
+        3. Include your name or alias in the transaction memo
+      </div>
+      <div class="text">
+        Observer names are added manually
+        after transaction verification on the blockchain.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">TRANSFER DETAILS</div>
+      <div class="payment">
+        Asset: USDT<br>
+        Network: TRC20
+        <div class="address">
+          YOUR_USDT_ADDRESS_HERE
+        </div>
+        Amount: any<br>
+        Memo / Comment: optional
+      </div>
+    </div>
+
+    <div class="footer">
+      You may observe.<br>
+      You may participate.<br>
+      The decision is always yours.
+    </div>
+
+    <div style="text-align:center;">
+      <a class="btn" href="index.html">RETURN TO SIGNAL</a>
+    </div>
   </div>
-
-  <div class="notice">
-    The game will begin without announcement.<br>
-    There will be no invitation.<br><br>
-    Phase transitions may occur without warning.
-  </div>
-
-  <div class="text">
-    If you intend to stabilize the signal,<br>
-    transmit a synchronization input using the protocol below.
-  </div>
-
-  <ul class="protocol">
-    <li>• Asset: <strong>USDT</strong></li>
-    <li>• Network: <strong>TRC20</strong></li>
-    <li>• Include your <strong>Observer Signature</strong> in the transaction memo</li>
-    <li>• Amount is unrestricted</li>
-  </ul>
-
-  <div class="address">
-    DESTINATION ADDRESS:<br>
-    <strong>PASTE_YOUR_USDT_ADDRESS_HERE</strong>
-  </div>
-
-  <div class="notice">
-    Only on-chain verified transmissions are acknowledged.<br>
-    Observer signatures are permanent records.
-  </div>
-
-  <!-- OFFICIAL RULES ВСТРОЕНЫ ЗДЕСЬ -->
-
-  <h2>[ OFFICIAL RULES ]</h2>
-  <ul class="rules">
-    <li>• Participation is free and does not require contribution.</li>
-    <li>• Contributions do not grant advantages or hints.</li>
-    <li>• All verified contributions form a shared Signal Pool.</li>
-    <li>• The first observer to complete the final phase receives the pool.</li>
-    <li>• Verification is performed manually using public blockchain data.</li>
-    <li>• There is no guarantee the signal will reach final phase.</li>
-    <li>• Participation implies acceptance of uncertainty.</li>
-  </ul>
-
-  <div class="actions">
-    <a class="btn" href="index.html">
-      RETURN TO SIGNAL
-    </a>
-  </div>
-
-  <div class="footer">
-    Silence does not imply failure.
-  </div>
-</div>
 
 </body>
 </html>
