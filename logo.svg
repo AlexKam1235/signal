@@ -1,0 +1,53 @@
+<svg viewBox="0 0 400 400"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Outer carrier ring -->
+  <circle cx="200" cy="200" r="170"
+          stroke="#1aff1a"
+          stroke-width="1.5"
+          fill="none"
+          opacity="0.12"/>
+
+  <!-- Inner observer -->
+  <circle cx="200" cy="200" r="6"
+          fill="#1aff1a"
+          opacity="0.8"/>
+
+  <!-- Signal segments (encoded angles) -->
+
+  <!-- S -->
+  <line x1="200" y1="30" x2="200" y2="90"
+        stroke="#1aff1a" stroke-width="2" opacity="0.25"
+        transform="rotate(285 200 200)" />
+
+  <!-- I -->
+  <line x1="200" y1="30" x2="200" y2="70"
+        stroke="#1aff1a" stroke-width="2" opacity="0.25"
+        transform="rotate(135 200 200)" />
+
+  <!-- G -->
+  <line x1="200" y1="30" x2="200" y2="110"
+        stroke="#1aff1a" stroke-width="2" opacity="0.25"
+        transform="rotate(105 200 200)" />
+
+  <!-- N -->
+  <line x1="200" y1="30" x2="200" y2="100"
+        stroke="#1aff1a" stroke-width="2" opacity="0.25"
+        transform="rotate(210 200 200)" />
+
+  <!-- A -->
+  <line x1="200" y1="30" x2="200" y2="60"
+        stroke="#1aff1a" stroke-width="2" opacity="0.25"
+        transform="rotate(15 200 200)" />
+
+  <!-- L -->
+  <line x1="200" y1="30" x2="200" y2="95"
+        stroke="#1aff1a" stroke-width="2" opacity="0.25"
+        transform="rotate(180 200 200)" />
+
+  <!-- Hidden hint -->
+  <desc>
+    Angular data, not symbols. Measure, map, translate.
+  </desc>
+
+</svg>
