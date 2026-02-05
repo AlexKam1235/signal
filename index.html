@@ -2,102 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SIGNAL</title>
+  <title>SIGNAL DETECTED</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --signal: #39ff14;
+      --signal-dim: rgba(57,255,20,0.25);
+      --bg: #000;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #020702 0%, #000 70%);
+      color: var(--signal);
+      font-family: "Courier New", monospace;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* === ФОНОВЫЙ ЛОГОТИП === */
+    .background-logo {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 180px;
+      letter-spacing: 20px;
+      opacity: 0.04;
+      pointer-events: none;
+      transition: opacity 0.6s ease, filter 0.6s ease;
+    }
+
+    body.acknowledged .background-logo {
+      animation: logoFlash 1.6s ease-in-out 2;
+    }
+
+    @keyframes logoFlash {
+      0%, 100% {
+        opacity: 0.04;
+        filter: blur(2px);
+      }
+      50% {
+        opacity: 0.18;
+        filter: blur(0);
+      }
+    }
+
+    /* === ОСНОВНОЙ БЛОК === */
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .phase {
+      font-size: 12px;
+      letter-spacing: 2px;
+      opacity: 0.75;
+      margin-bottom: 26px;
+    }
+
+    .title {
+      font-size: 18px;
+      letter-spacing: 4px;
+      margin-bottom: 26px;
+    }
+
+    .text {
+      font-size: 13px;
+      line-height: 1.7;
+      opacity: 0.85;
+      margin-bottom: 40px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .btn {
+      padding: 12px 18px;
+      border: 1px solid var(--signal);
+      font-size: 12px;
+      text-decoration: none;
+      color: var(--signal);
+      transition: all 0.25s ease;
+    }
+
+    .btn:hover {
+      background: var(--signal);
+      color: #000;
+      box-shadow: 0 0 22px rgba(57,255,20,0.6);
+    }
+
+    .footer {
+      margin-top: 50px;
+      font-size: 11px;
+      opacity: 0.45;
+    }
+
+    /* === ЛЁГКИЕ СТРОКИ === */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(57,255,20,0.03),
+        rgba(57,255,20,0.03) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      pointer-events: none;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="background-logo"></div>
+<!-- ФОНОВЫЙ СИМВОЛ -->
+<div class="background-logo">◉◉◉</div>
 
-<main class="panel">
-
-  <section class="block">
-    <h2>SIGNAL STATUS</h2>
-    <div class="value">STABLE</div>
-  </section>
-
-  <section class="block">
-    <h2>PHASE</h2>
-    <div class="value" id="phase">PENDING</div>
-  </section>
-
-  <section class="block">
-    <h2>OBSERVERS</h2>
-    <div class="value" id="observer-count">ONLINE: 0</div>
-    <ul class="observer-log" id="observer-log"></ul>
-  </section>
-
-  <section class="block">
-    <h2>REWARD POOL</h2>
-    <div class="value" id="reward">0 USDT</div>
-  </section>
-
-  <div class="action">
-    <a href="acknowledge.html">ACKNOWLEDGE SIGNAL</a>
+<div class="container">
+  <div class="phase">
+    PHASE: <span id="phase">PENDING</span>
   </div>
 
-  <section class="block proof">
-    <h2>FINAL PHASE — INTEGRITY PROOF</h2>
-    <div class="small">STATUS: LOCKED</div>
-    <code id="hash"></code>
-    <div class="hint">Hash published before final phase</div>
-  </section>
+  <div class="title">
+    SIGNAL DETECTED
+  </div>
 
-</main>
+  <div class="text">
+    A non-random signal has been detected.<br>
+    It does not broadcast instructions.<br>
+    It responds to observation.
+  </div>
+
+  <div class="actions">
+    <a class="btn" href="acknowledge.html">ACKNOWLEDGE</a>
+  </div>
+
+  <div class="footer">
+    monitoring continues
+  </div>
+</div>
 
 <script>
-async function loadJSON(path, fallback) {
-  try {
-    const r = await fetch(path);
-    if (!r.ok) throw new Error();
-    return await r.json();
-  } catch {
-    return fallback;
-  }
-}
-
-async function init() {
-  const observers = await loadJSON('observers.json', { observers: [] });
-  const reward = await loadJSON('reward.json', { reward_pool: 0 });
-  const phase = await loadJSON('phase.json', { phase: "pending" });
-  const proof = await loadJSON('proof.json', { final_hash: "—" });
-
-  document.getElementById('phase').textContent = phase.phase.toUpperCase();
-  document.body.classList.add("phase-" + phase.phase);
-
-  document.getElementById('reward').textContent =
-    reward.reward_pool + " USDT";
-
-  document.getElementById('observer-count').textContent =
-    "ONLINE: " + observers.observers.length;
-
-  const list = document.getElementById('observer-log');
-  list.innerHTML = "";
-
-  observers.observers.forEach((o, i) => {
-    const li = document.createElement('li');
-    li.textContent = `[${o.name}] acknowledged`;
-    li.className = "observer" + (i === observers.observers.length - 1 ? " new" : "");
-    list.appendChild(li);
-  });
-
-  document.getElementById('hash').textContent = proof.final_hash;
-
-  const params = new URLSearchParams(location.search);
+  // === ACKNOWLEDGEMENT FLASH ===
+  const params = new URLSearchParams(window.location.search);
   if (params.get("ack") === "1") {
-    document.body.classList.add("signal-acknowledged");
-    setTimeout(() => {
-      document.body.classList.remove("signal-acknowledged");
-      history.replaceState({}, "", location.pathname);
-    }, 6000);
+    document.body.classList.add("acknowledged");
   }
-}
 
-init();
+  // === ФАЗА (МЕНЯЕШЬ ВРУЧНУЮ) ===
+  const CURRENT_PHASE = "PENDING"; 
+  document.getElementById("phase").textContent = CURRENT_PHASE;
 </script>
 
 </body>
 </html>
-
