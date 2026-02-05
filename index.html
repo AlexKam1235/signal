@@ -2,102 +2,126 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SIGNAL</title>
+  <title>SIGNAL DETECTED</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --signal: #39ff14;
+      --signal-dim: rgba(57,255,20,0.3);
+    }
+
+    body {
+      margin: 0;
+      background: #000;
+      color: var(--signal);
+      font-family: "Courier New", monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body.acknowledged .logo {
+      animation: flash 1.6s ease-in-out 2;
+    }
+
+    @keyframes flash {
+      0%,100% { opacity: 0.4; filter: blur(1px); }
+      50% { opacity: 1; filter: blur(0); }
+    }
+
+    .container {
+      width: 520px;
+      text-align: center;
+      position: relative;
+    }
+
+    .logo {
+      font-size: 38px;
+      letter-spacing: 6px;
+      opacity: 0.45;
+      margin-bottom: 28px;
+      transition: opacity 0.4s ease;
+    }
+
+    .phase {
+      font-size: 13px;
+      margin-bottom: 22px;
+      opacity: 0.8;
+    }
+
+    .text {
+      font-size: 13px;
+      line-height: 1.7;
+      opacity: 0.85;
+      margin-bottom: 28px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 10px 14px;
+      border: 1px solid var(--signal);
+      font-size: 12px;
+      text-decoration: none;
+      color: var(--signal);
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--signal);
+      color: #000;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 11px;
+      opacity: 0.5;
+    }
+  </style>
 </head>
 
 <body>
+<div class="container">
 
-<div class="background-logo"></div>
+  <div class="logo">◉◉◉</div>
 
-<main class="panel">
-
-  <section class="block">
-    <h2>SIGNAL STATUS</h2>
-    <div class="value">STABLE</div>
-  </section>
-
-  <section class="block">
-    <h2>PHASE</h2>
-    <div class="value" id="phase">PENDING</div>
-  </section>
-
-  <section class="block">
-    <h2>OBSERVERS</h2>
-    <div class="value" id="observer-count">ONLINE: 0</div>
-    <ul class="observer-log" id="observer-log"></ul>
-  </section>
-
-  <section class="block">
-    <h2>REWARD POOL</h2>
-    <div class="value" id="reward">0 USDT</div>
-  </section>
-
-  <div class="action">
-    <a href="acknowledge.html">ACKNOWLEDGE SIGNAL</a>
+  <div class="phase">
+    PHASE: <span id="phase">PENDING</span>
   </div>
 
-  <section class="block proof">
-    <h2>FINAL PHASE — INTEGRITY PROOF</h2>
-    <div class="small">STATUS: LOCKED</div>
-    <code id="hash"></code>
-    <div class="hint">Hash published before final phase</div>
-  </section>
+  <div class="text">
+    A non-random signal has been detected.<br>
+    It does not broadcast instructions.<br>
+    It responds to observation.
+  </div>
 
-</main>
+  <div class="actions">
+    <a class="btn" href="acknowledge.html">ACKNOWLEDGE</a>
+    <a class="btn" href="rules.html">RULES</a>
+  </div>
+
+  <div class="footer">
+    monitoring continues
+  </div>
+
+</div>
 
 <script>
-async function loadJSON(path, fallback) {
-  try {
-    const r = await fetch(path);
-    if (!r.ok) throw new Error();
-    return await r.json();
-  } catch {
-    return fallback;
-  }
-}
-
-async function init() {
-  const observers = await loadJSON('observers.json', { observers: [] });
-  const reward = await loadJSON('reward.json', { reward_pool: 0 });
-  const phase = await loadJSON('phase.json', { phase: "pending" });
-  const proof = await loadJSON('proof.json', { final_hash: "—" });
-
-  document.getElementById('phase').textContent = phase.phase.toUpperCase();
-  document.body.classList.add("phase-" + phase.phase);
-
-  document.getElementById('reward').textContent =
-    reward.reward_pool + " USDT";
-
-  document.getElementById('observer-count').textContent =
-    "ONLINE: " + observers.observers.length;
-
-  const list = document.getElementById('observer-log');
-  list.innerHTML = "";
-
-  observers.observers.forEach((o, i) => {
-    const li = document.createElement('li');
-    li.textContent = `[${o.name}] acknowledged`;
-    li.className = "observer" + (i === observers.observers.length - 1 ? " new" : "");
-    list.appendChild(li);
-  });
-
-  document.getElementById('hash').textContent = proof.final_hash;
-
-  const params = new URLSearchParams(location.search);
+  const params = new URLSearchParams(window.location.search);
   if (params.get("ack") === "1") {
-    document.body.classList.add("signal-acknowledged");
-    setTimeout(() => {
-      document.body.classList.remove("signal-acknowledged");
-      history.replaceState({}, "", location.pathname);
-    }, 6000);
+    document.body.classList.add("acknowledged");
   }
-}
 
-init();
+  // ФАЗУ ТЫ МЕНЯЕШЬ ВРУЧНУЮ
+  const CURRENT_PHASE = "PENDING"; 
+  document.getElementById("phase").textContent = CURRENT_PHASE;
 </script>
 
 </body>
 </html>
-
