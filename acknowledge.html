@@ -7,27 +7,48 @@
 
   <style>
     :root {
-      --signal: #1aff1a;
+      --signal: #39ff14;
+      --signal-dim: rgba(57,255,20,0.35);
       --bg: #000;
     }
 
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background: radial-gradient(circle at center, #020602, #000);
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #020702 0%, #000 70%);
       color: var(--signal);
-      font-family: monospace;
+      font-family: "Courier New", monospace;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
     }
 
     .channel {
-      width: 460px;
-      padding: 28px;
-      border: 1px solid rgba(26,255,26,0.3);
+      width: 480px;
+      padding: 30px;
+      border: 1px solid var(--signal-dim);
       background: rgba(0,0,0,0.65);
       box-shadow: 0 0 50px rgba(0,0,0,0.8);
+      position: relative;
+    }
+
+    .channel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(57,255,20,0.03),
+        rgba(57,255,20,0.03) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      pointer-events: none;
     }
 
     h1 {
@@ -38,59 +59,63 @@
 
     .text {
       font-size: 13px;
-      line-height: 1.6;
+      line-height: 1.65;
       opacity: 0.9;
       margin-bottom: 20px;
     }
 
-    .rules {
+    .notice {
       font-size: 12px;
+      line-height: 1.6;
       opacity: 0.75;
       margin-bottom: 22px;
     }
 
-    .rules li {
-      margin-bottom: 8px;
+    .protocol {
+      font-size: 12px;
+      margin-bottom: 22px;
     }
 
-    .field {
-      margin-bottom: 16px;
-    }
-
-    label {
-      display: block;
-      font-size: 11px;
-      opacity: 0.7;
+    .protocol li {
       margin-bottom: 6px;
     }
 
-    input {
-      width: 100%;
-      background: #000;
-      border: 1px solid rgba(26,255,26,0.4);
-      color: var(--signal);
-      padding: 8px;
-      font-family: monospace;
+    .address {
+      font-size: 12px;
+      padding: 10px;
+      border: 1px dashed var(--signal-dim);
+      word-break: break-all;
+      margin-bottom: 20px;
     }
 
-    .action {
-      margin-top: 22px;
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
       padding: 12px;
-      text-align: center;
       border: 1px solid var(--signal);
+      text-align: center;
       cursor: pointer;
+      font-size: 12px;
+      text-decoration: none;
+      color: var(--signal);
       transition: all 0.2s ease;
     }
 
-    .action:hover {
+    .btn:hover {
       background: var(--signal);
       color: #000;
+      box-shadow: 0 0 18px rgba(57,255,20,0.6);
     }
 
-    .note {
+    .footer {
+      margin-top: 18px;
       font-size: 11px;
       opacity: 0.5;
-      margin-top: 16px;
       text-align: center;
     }
   </style>
@@ -102,45 +127,52 @@
   <h1>[ ACKNOWLEDGEMENT CHANNEL OPEN ]</h1>
 
   <div class="text">
-    This channel records intentional observers.<br>
-    Acknowledgement strengthens the signal and leaves a permanent trace.
+    This channel does not initiate the game.<br>
+    It records intentional interaction with the signal.
   </div>
 
-  <ul class="rules">
-    <li>• Each observer may acknowledge once.</li>
-    <li>• Observer signatures are public.</li>
-    <li>• Acknowledgements cannot be revoked.</li>
-    <li>• Signal mass is redistributed after final synchronization.</li>
+  <div class="notice">
+    The game will not begin by announcement.<br>
+    There will be no invitation.<br><br>
+    The signal will transition phases without warning.<br>
+    Those observing at the right moment will notice.
+  </div>
+
+  <div class="text">
+    If you intend to stabilize the signal,<br>
+    transmit a synchronization input using the protocol below.
+  </div>
+
+  <ul class="protocol">
+    <li>• Asset: <strong>USDT</strong></li>
+    <li>• Network: <strong>TRC20</strong> <!-- поменяй если нужно --></li>
+    <li>• Include your <strong>Observer Signature</strong> in the transaction memo</li>
+    <li>• Amount is unrestricted</li>
   </ul>
 
-  <div class="field">
-    <label>OBSERVER SIGNATURE</label>
-    <input type="text" placeholder="choose identifier" />
+  <div class="address">
+    DESTINATION ADDRESS:<br>
+    <strong>PASTE_YOUR_USDT_ADDRESS_HERE</strong>
   </div>
 
-  <div class="field">
-    <label>SIGNAL CONTRIBUTION</label>
-    <input type="text" placeholder="amount (USDT / crypto)" />
+  <div class="notice">
+    Only on-chain verified transmissions are acknowledged.<br>
+    Observer signatures are permanent records.
   </div>
 
-  <!-- СЮДА ВСТАВЛЯЕШЬ РЕАЛЬНУЮ КРИПТО-ФОРМУ -->
-  <!-- Например: NOWPayments / Coinbase Commerce / TON / manual address -->
-
-  <div class="action" onclick="confirmAck()">
-    CONFIRM ACKNOWLEDGEMENT
+  <div class="actions">
+    <a class="btn" href="index.html">
+      RETURN TO SIGNAL
+    </a>
+    <a class="btn" href="rules.html">
+      OFFICIAL RULES
+    </a>
   </div>
 
-  <div class="note">
-    Proceeding confirms intent and awareness.
+  <div class="footer">
+    Silence does not imply failure.
   </div>
 </div>
-
-<script>
-function confirmAck() {
-  // после реального платежа
-  window.location.href = "index.html?ack=1";
-}
-</script>
 
 </body>
 </html>
