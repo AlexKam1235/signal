@@ -29,11 +29,11 @@
     }
 
     .channel {
-      width: 480px;
-      padding: 30px;
+      width: 520px;
+      padding: 32px;
       border: 1px solid var(--signal-dim);
       background: rgba(0,0,0,0.65);
-      box-shadow: 0 0 50px rgba(0,0,0,0.8);
+      box-shadow: 0 0 60px rgba(0,0,0,0.9);
       position: relative;
     }
 
@@ -57,6 +57,13 @@
       margin-bottom: 18px;
     }
 
+    h2 {
+      font-size: 13px;
+      margin-top: 26px;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+
     .text {
       font-size: 13px;
       line-height: 1.65;
@@ -68,15 +75,11 @@
       font-size: 12px;
       line-height: 1.6;
       opacity: 0.75;
-      margin-bottom: 22px;
-    }
-
-    .protocol {
-      font-size: 12px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .protocol li {
+      font-size: 12px;
       margin-bottom: 6px;
     }
 
@@ -88,10 +91,20 @@
       margin-bottom: 20px;
     }
 
+    .rules {
+      font-size: 12px;
+      line-height: 1.6;
+      opacity: 0.8;
+    }
+
+    .rules li {
+      margin-bottom: 6px;
+    }
+
     .actions {
       display: flex;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 24px;
     }
 
     .btn {
@@ -132,10 +145,9 @@
   </div>
 
   <div class="notice">
-    The game will not begin by announcement.<br>
+    The game will begin without announcement.<br>
     There will be no invitation.<br><br>
-    The signal will transition phases without warning.<br>
-    Those observing at the right moment will notice.
+    Phase transitions may occur without warning.
   </div>
 
   <div class="text">
@@ -145,7 +157,7 @@
 
   <ul class="protocol">
     <li>• Asset: <strong>USDT</strong></li>
-    <li>• Network: <strong>TRC20</strong> <!-- поменяй если нужно --></li>
+    <li>• Network: <strong>TRC20</strong></li>
     <li>• Include your <strong>Observer Signature</strong> in the transaction memo</li>
     <li>• Amount is unrestricted</li>
   </ul>
@@ -160,12 +172,22 @@
     Observer signatures are permanent records.
   </div>
 
+  <!-- OFFICIAL RULES ВСТРОЕНЫ ЗДЕСЬ -->
+
+  <h2>[ OFFICIAL RULES ]</h2>
+  <ul class="rules">
+    <li>• Participation is free and does not require contribution.</li>
+    <li>• Contributions do not grant advantages or hints.</li>
+    <li>• All verified contributions form a shared Signal Pool.</li>
+    <li>• The first observer to complete the final phase receives the pool.</li>
+    <li>• Verification is performed manually using public blockchain data.</li>
+    <li>• There is no guarantee the signal will reach final phase.</li>
+    <li>• Participation implies acceptance of uncertainty.</li>
+  </ul>
+
   <div class="actions">
     <a class="btn" href="index.html">
       RETURN TO SIGNAL
-    </a>
-    <a class="btn" href="rules.html">
-      OFFICIAL RULES
     </a>
   </div>
 
