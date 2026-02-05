@@ -1,7 +1,7 @@
 :root {
   --signal: #1aff1a;
   --bg: #050505;
-  --panel: rgba(0, 0, 0, 0.65);
+  --panel: rgba(0, 0, 0, 0.72);
 }
 
 body {
@@ -11,57 +11,72 @@ body {
   font-family: monospace;
 }
 
-/* LOGO */
+/* LOGO — SOURCE OF SIGNAL */
 
 .background-logo {
   position: fixed;
   inset: 0;
-  background: url("logo.svg") center / 950px no-repeat;
-  opacity: 0.32;
+  background: url("logo.svg") center / 1050px no-repeat;
+  opacity: 0.48;
   pointer-events: none;
-  animation: signalBreath 12s ease-in-out infinite;
+  animation:
+    signalBreath 12s ease-in-out infinite,
+    slowRotate 140s linear infinite;
+  filter:
+    drop-shadow(0 0 25px rgba(26,255,26,0.35))
+    drop-shadow(0 0 70px rgba(26,255,26,0.15));
 }
 
-/* LOGO BREATH */
+/* BREATH */
 
 @keyframes signalBreath {
-  0%   { opacity: 0.28; transform: scale(1); }
-  50%  { opacity: 0.38; transform: scale(1.01); }
-  100% { opacity: 0.28; transform: scale(1); }
+  0%   { opacity: 0.42; transform: scale(1); }
+  50%  { opacity: 0.55; transform: scale(1.015); }
+  100% { opacity: 0.42; transform: scale(1); }
+}
+
+/* ROTATION */
+
+@keyframes slowRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 /* PHASE REACTIONS */
 
 body.phase-pending .background-logo {
-  filter: blur(1.5px);
+  filter:
+    blur(1px)
+    drop-shadow(0 0 20px rgba(26,255,26,0.25));
 }
 
 body.phase-active .background-logo {
-  filter: blur(0);
-  opacity: 0.45;
+  opacity: 0.55;
 }
 
 body.phase-final .background-logo {
-  opacity: 0.55;
-  animation: signalPulse 4s ease-in-out infinite;
+  opacity: 0.65;
+  animation:
+    signalPulse 4s ease-in-out infinite,
+    slowRotate 100s linear infinite;
 }
 
 @keyframes signalPulse {
-  0%   { opacity: 0.4; }
-  50%  { opacity: 0.6; }
-  100% { opacity: 0.4; }
+  0%   { opacity: 0.5; }
+  50%  { opacity: 0.7; }
+  100% { opacity: 0.5; }
 }
 
-/* ACKNOWLEDGE FLASH */
+/* DONATE ACK */
 
 body.signal-acknowledged .background-logo {
   animation: acknowledgeFlash 2s ease-in-out 3;
 }
 
 @keyframes acknowledgeFlash {
-  0%   { opacity: 0.3; }
-  50%  { opacity: 0.7; }
-  100% { opacity: 0.3; }
+  0%   { opacity: 0.4; }
+  50%  { opacity: 0.85; }
+  100% { opacity: 0.4; }
 }
 
 /* PANEL */
@@ -72,7 +87,7 @@ body.signal-acknowledged .background-logo {
   padding: 30px;
   background: var(--panel);
   border: 1px solid #1aff1a22;
-  box-shadow: 0 0 40px #000;
+  box-shadow: 0 0 60px #000;
 }
 
 /* BLOCKS */
@@ -102,13 +117,12 @@ h2 {
 
 .observer {
   opacity: 0.6;
-  transition: all 0.4s ease;
 }
 
 .observer.new {
   opacity: 1;
   color: var(--signal);
-  text-shadow: 0 0 8px var(--signal);
+  text-shadow: 0 0 10px var(--signal);
   animation: observerFade 8s ease forwards;
 }
 
@@ -126,7 +140,7 @@ h2 {
 }
 
 .action a {
-  padding: 10px 22px;
+  padding: 10px 24px;
   background: var(--signal);
   color: #000;
   text-decoration: none;
