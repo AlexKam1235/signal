@@ -1,86 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>SIGNAL // OBSERVER</title>
+  <meta charset="UTF-8">
+  <title>SIGNAL</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<main class="terminal">
+<div class="background-logo"></div>
 
-  <section>
-    <h1>SIGNAL STATUS</h1>
-    <pre id="signal-status">loading...</pre>
+<main class="panel">
+
+  <section class="block">
+    <h2>SIGNAL STATUS</h2>
+    <div class="value">STABLE</div>
   </section>
 
-  <section>
-    <h1>PHASE</h1>
-    <pre id="phase-status">loading...</pre>
+  <section class="block">
+    <h2>PHASE</h2>
+    <div class="value" id="phase">PENDING</div>
   </section>
 
-  <section>
-    <h1>OBSERVERS</h1>
-    <pre id="observer-count">loading...</pre>
-    <pre id="observer-log">loading...</pre>
+  <section class="block">
+    <h2>OBSERVERS</h2>
+    <div class="value" id="observer-count">ONLINE: 0</div>
+    <ul class="observer-log" id="observer-log"></ul>
   </section>
 
-  <section>
-    <h1>REWARD POOL</h1>
-    <pre id="reward-pool">loading...</pre>
+  <section class="block">
+    <h2>REWARD POOL</h2>
+    <div class="value" id="reward">0 USDT</div>
   </section>
 
-  <section class="action">
-    <a href="donate.html">[ ACKNOWLEDGE SIGNAL ]</a>
-  </section>
+  <div class="action">
+    <a href="donate.html">ACKNOWLEDGE SIGNAL</a>
+  </div>
 
-  <section class="proof">
-    <h1>FINAL PHASE — INTEGRITY PROOF</h1>
-    <pre id="proof-status">loading...</pre>
-    <pre id="proof-hash">loading...</pre>
-    <pre id="proof-note"></pre>
+  <section class="block proof">
+    <h2>FINAL PHASE — INTEGRITY PROOF</h2>
+    <div class="small">STATUS: LOCKED</div>
+    <code id="hash"></code>
+    <div class="hint">Hash published before final phase</div>
   </section>
 
 </main>
 
 <script>
-async function loadJSON(path) {
-  const res = await fetch(path);
-  return res.json();
+async function load(path) {
+  return fetch(path).then(r => r.json());
 }
 
 async function init() {
-  const phase = await loadJSON('phase.json');
-  const observers = await loadJSON('observers.json');
-  const reward = await loadJSON('reward.json');
-  const proof = await loadJSON('proof.json');
+  const observers = await load('observers.json');
+  const reward = await load('reward.json');
+  const phase = await load('phase.json');
+  const proof = await load('proof.json');
 
-  document.getElementById('signal-status').textContent =
-    "STABLE";
+  document.getElementById('phase').textContent =
+    phase.phase.toUpperCase();
 
-  document.getElementById('phase-status').textContent =
-    phase.phase_2_status.toUpperCase();
+  document.body.classList.add("phase-" + phase.phase);
+
+  document.getElementById('reward').textContent =
+    reward.reward_pool + " USDT";
 
   document.getElementById('observer-count').textContent =
     "ONLINE: " + observers.observers.length;
 
-  document.getElementById('observer-log').textContent =
-    observers.observers
-      .map(o => `[${o.name}] acknowledged`)
-      .join('\n');
+  const list = document.getElementById('observer-log');
+  list.innerHTML = "";
 
-  document.getElementById('reward-pool').textContent =
-    reward.reward_pool + " USDT";
+  observers.observers.forEach((o, i) => {
+    const li = document.createElement('li');
+    li.textContent = `[${o.name}] acknowledged`;
+    li.classList.add('observer');
+    if (i === observers.observers.length - 1) {
+      li.classList.add('new');
+    }
+    list.appendChild(li);
+  });
 
-  document.getElementById('proof-status').textContent =
-    "STATUS: " + proof.final_phase.toUpperCase();
+  document.getElementById('hash').textContent =
+    proof.final_hash;
 
-  document.getElementById('proof-hash').textContent =
-    "SHA-256:\n" + proof.final_hash;
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("ack") === "1") {
+    document.body.classList.add("signal-acknowledged");
 
-  document.getElementById('proof-note').textContent =
-    "This hash was published before the final phase.";
+    setTimeout(() => {
+      document.body.classList.remove("signal-acknowledged");
+      history.replaceState({}, document.title, window.location.pathname);
+    }, 6000);
+  }
 }
 
 init();
