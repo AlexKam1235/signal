@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ACKNOWLEDGEMENT CHANNEL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --green: #39ff14;
+      --green-soft: rgba(57, 255, 20, 0.4);
+      --bg: #000000;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #020602 0%, #000000 70%);
+      color: var(--green);
+      font-family: "Courier New", monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .channel {
+      width: 420px;
+      border: 1px solid var(--green-soft);
+      padding: 28px;
+      box-shadow: 0 0 40px rgba(57, 255, 20, 0.08);
+      position: relative;
+      background: rgba(0,0,0,0.6);
+    }
+
+    .channel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(57,255,20,0.03),
+        rgba(57,255,20,0.03) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+      pointer-events: none;
+    }
+
+    h1 {
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .text {
+      font-size: 13px;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 24px;
+    }
+
+    .warning {
+      color: rgba(57,255,20,0.6);
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+
+    .action {
+      border: 1px solid var(--green);
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+      color: var(--green);
+      display: block;
+    }
+
+    .action:hover {
+      background: var(--green);
+      color: #000;
+      box-shadow: 0 0 18px rgba(57,255,20,0.6);
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 11px;
+      opacity: 0.5;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="channel">
+    <h1>[ ACKNOWLEDGEMENT CHANNEL OPEN ]</h1>
+
+    <div class="text">
+      Your presence has been detected.<br>
+      This channel allows confirmation of intent.<br><br>
+      Acknowledgement leaves a permanent trace within the signal.
+    </div>
+
+    <div class="warning">
+      Proceed only if the action is deliberate.<br>
+      Observers cannot be removed.
+    </div>
+
+    <!-- СЮДА ТЫ ВСТАВЛЯЕШЬ ССЫЛКУ НА КРИПТО-ФОРМУ / АГРЕГАТОР -->
+    <a class="action" href="#" onclick="acknowledge()">
+      CONFIRM PRESENCE
+    </a>
+
+    <div class="footer">
+      channel integrity: stable
+    </div>
+  </div>
+
+  <script>
+    function acknowledge() {
+      alert("SIGNAL ACKNOWLEDGED\n\nObserver trace recorded.");
+      // здесь позже можно добавить:
+      // – редирект на крипто-платёж
+      // – анимацию логотипа
+      // – увеличение reward pool
+    }
+  </script>
+
+</body>
+</html>
